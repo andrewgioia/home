@@ -1,0 +1,91 @@
+/*! AndrewGioia.com style definitions v7.0.1 */
+
+// normalize
+@import "../../node_modules/normalize.css/normalize";
+
+// our stuff
+$bg-light:          #f3f3f1;
+$font-color-navy:   #002953;
+$font-family-base:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$font-size-base:    16px;
+$screen-mobile:     640px;
+$screen-tablet:     768px;
+$screen-laptop:     1024px;
+$screen-display:    1280px;
+$screen-full:       1440px;
+
+body {
+    background: $bg-light;
+    display: flex;
+    flex-direction: column;
+    font-size: $font-size-base;
+    height: 100vh;
+    justify-content: space-between;
+    overflow: hidden;
+    width: 100vw;
+}
+
+main {
+    border-top: 1vmin solid #fff;
+    padding: 6vmin;
+
+    h1 {
+        color: $font-color-navy;
+        font-family: $font-family-base;
+        font-size: 4rem; // basic fallback
+        font-size: 10vmin; // premium fallback
+        font-size: max(10vmin, 24px);
+        font-weight: 700;
+        line-height: 1.15;
+        margin: 0;
+
+        span.who {
+            display: block;
+            font-weight: 900;
+        }
+
+        a {
+            color: #0069ff;
+            text-decoration: none;
+        }
+    }
+}
+
+footer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding: 6vmin;
+
+    a {
+        font-size: 3rem; // basic fallback
+        font-size: 5vmin; // premium fallback
+        font-size: max(5vmin, 32px);
+        margin-right: 2vmin;
+        text-decoration: none;
+
+        .icon-github {
+            color: #24292e;
+        }
+
+        .icon-mastodon {
+            color: #3088d4;
+        }
+    }
+}
+
+// icons
+@import "icons";
+
+// media queries
+@media only screen and (min-width: $screen-display) {
+    main {
+        padding-right: 20vmin;
+    }
+}
+@media only screen and (min-width: $screen-full) {
+    main {
+        padding-right: 32vmin;
+    }
+}
