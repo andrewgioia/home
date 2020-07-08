@@ -7,3 +7,11 @@ The goal was to make it as light as possible, without any JavaScript, using syst
 ![Screenshot as of July 2020](https://i.imgur.com/kqvVGde.png)
 
 It's just a virtual business card but by all means fork/use the theme, just share in kind and refer back.
+
+## Quick note on building
+
+I'm using NPM to build for development and production and there are some basic commands in `package.json` for this. Make sure to `npm install`, then run `npm run dev` to generate the public files in `dist`. There should be a few asset folders and then `index.html` and `site.css` in the root there.
+
+## Todo
+
+Add some kind of minify support into the build process.
