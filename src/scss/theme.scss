@@ -3,7 +3,8 @@
 // normalize
 @import "../../node_modules/normalize.css/normalize";
 
-// our stuff
+// variables
+$version:           '1.0.3';
 $bg-light:          #f3f3f1;
 $font-color-navy:   #002953;
 $font-family-base:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -14,6 +15,10 @@ $screen-laptop:     1024px;
 $screen-display:    1280px;
 $screen-full:       1440px;
 
+// icons
+@import "icons";
+
+// fit and finish
 body {
     background: $bg-light;
     display: flex;
@@ -62,21 +67,52 @@ footer {
         font-size: 3rem; // basic fallback
         font-size: 5vmin; // premium fallback
         font-size: max(5vmin, 32px);
-        margin-right: 2vmin;
-        text-decoration: none;
+        margin-right: 4vmin;
 
-        .icon-github {
+        &.github {
             color: #24292e;
         }
 
-        .icon-mastodon {
+        &.mastodon {
             color: #3088d4;
+        }
+
+        &.email {
+            color: #ef5777;
         }
     }
 }
 
-// icons
-@import "icons";
+a {
+    position: relative;
+    text-decoration: none;
+
+    // novelty arrow
+    &::after {
+        color: inherit;
+        content: $icon-arrow;
+        display: block;
+        font-family: 'andrew';
+        font-size: 75%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        -webkit-transform: translateY(-20%) translateX(80%);
+        -moz-transform: translateY(-20%) translateX(80%);
+        transform: translateY(-20%) translateX(80%);
+        transition: opacity 150ms ease-in-out, margin-top 150ms ease-in-out;
+    }
+
+    // show the arrow on hover
+    &:hover::after {
+        display: block;
+        margin-top: -3px;
+        opacity: 100;
+    }
+
+}
 
 // media queries
 @media only screen and (min-width: $screen-display) {
