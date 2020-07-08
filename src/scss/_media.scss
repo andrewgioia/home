@@ -1,0 +1,28 @@
+// media queries
+
+@media only screen and (min-width: $screen-tablet) {
+    main {
+        padding-right: 12vmin;
+    }
+}
+@media only screen and (min-width: $screen-laptop) {
+    main {
+        padding-right: 24vmin;
+        h1 {
+            //line-height: 1.15
+        }
+    }
+}
+@media only screen and (min-width: $screen-display) {
+    main {
+        padding-right: 32vmin;
+    }
+}
+@media only screen and (min-width: $screen-full) {
+    main {
+        padding-right: 50vmin;
+        h1 {
+            //line-height: 1.1;
+        }
+    }
+}

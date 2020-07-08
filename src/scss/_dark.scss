@@ -1,0 +1,26 @@
+// dark mode preference
+@media (prefers-color-scheme: dark) {
+    body {
+        background: var(--bg-dark);
+    }
+    main {
+        border-top-color: var(--border-dark);
+
+        h1 {
+            color: var(--text-dark);
+
+            span.who {
+                color: var(--text-dark-hl);
+            }
+
+            a {
+                color: var(--link-tb-dark);
+            }
+        }
+    }
+    footer {
+        a.github {
+            color: var(--link-gh-dark);
+        }
+    }
+}
