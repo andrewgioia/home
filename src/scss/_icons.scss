@@ -2,6 +2,7 @@ $icon-arrow:        '\e902';
 $icon-email:        '\e903';
 $icon-github:       '\e900';
 $icon-mastodon:     '\e901';
+$icon-rss:          '\e907';
 
 @font-face {
     font-family: 'andrew';
@@ -41,4 +42,8 @@ $icon-mastodon:     '\e901';
 }
 .icon-mastodon:before {
     content: $icon-mastodon;
+}
+.icon-rss:before {
+    content: $icon-rss;
+    font-weight: 900;
 }

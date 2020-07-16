@@ -1,4 +1,4 @@
-/*! AndrewGioia.com style definitions v7.0.1 */
+/*! andrewgioia.com style definitions v7.0.1 */
 
 // normalize
 @import "../../node_modules/normalize.css/normalize";
@@ -21,6 +21,8 @@
     --link-tb-dark:     #{$link-tb-dark};
     --link-gh-normal:   #{$link-gh-normal};
     --link-gh-dark:     #{$link-gh-dark};
+    --link-blog-normal: #{$link-blog-normal};
+    --link-blog-dark:   #{$link-blog-dark};
 }
 
 // icons
@@ -89,6 +91,10 @@ footer {
         &.email {
             color: #ef5777;
         }
+
+        &.blog {
+            color: var(--link-blog-normal);
+        }
     }
 }
 
@@ -124,7 +130,7 @@ a {
 }
 
 // schemes
-//@import "dark";
+@import "dark";
 
 // media queries
 @import "media";
