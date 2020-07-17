@@ -13,7 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "sass --no-source-map src/scss/theme.scss dist/site.css && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist",
     "prod": "sass --no-source-map src/scss/theme.scss dist/site.css && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist",
-    "watch": "sass --no-source-map --watch src/scss/theme.scss dist/site.css"
+    "watch": "sass --no-source-map --watch src/scss/theme.scss dist/site.css",
+    "publish": "cp -R public/* /var/www/andrewgioia.com/*"
   },
   "repository": {
     "type": "git",
