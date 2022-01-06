@@ -8,21 +8,25 @@
 
 // css variables
 :root {
-    --bg-normal:        #{$bg-light};
-    --bg-dark:          #{$bg-dark};
-    --border-normal:    #{$border-light};
-    --border-dark:      #{$border-dark};
-    --text-normal:      #{$font-color-navy};
-    --text-normal-hl:   #{$font-color-navier};
-    --text-dark:        #{$font-color-gray};
-    --text-dark-hl:     #{$font-color-white};
-    --font-base:        #{$font-size-base};
-    --link-tb-normal:   #{$link-tb-normal};
-    --link-tb-dark:     #{$link-tb-dark};
-    --link-gh-normal:   #{$link-gh-normal};
-    --link-gh-dark:     #{$link-gh-dark};
-    --link-blog-normal: #{$link-blog-normal};
-    --link-blog-dark:   #{$link-blog-dark};
+    --bg-normal:         #{$bg-light};
+    --bg-dark:           #{$bg-dark};
+    --border-normal:     #{$border-light};
+    --border-dark:       #{$border-dark};
+    --text-normal:       #{$font-color-navy};
+    --text-normal-hl:    #{$font-color-navier};
+    --text-dark:         #{$font-color-gray};
+    --text-dark-hl:      #{$font-color-white};
+    --font-base:         #{$font-size-base};
+    --link-tb-normal:    #{$link-tb-normal};
+    --link-tb-dark:      #{$link-tb-dark};
+    --link-gh-normal:    #{$link-gh-normal};
+    --link-gh-dark:      #{$link-gh-dark};
+    --link-blog-normal:  #{$link-blog-normal};
+    --link-blog-dark:    #{$link-blog-dark};
+    --link-gitea-normal: #{$link-gitea-normal};
+    --link-gitea-dark:   #{$link-gitea-dark};
+    --link-pf-normal:    #{$link-pf-normal};
+    --link-pf-dark:      #{$link-pf-dark};
 }
 
 // icons
@@ -85,6 +89,18 @@ footer {
         font-size: max(8vmin, 36px);
         margin-right: 4vmin;
 
+        &.blog {
+            color: var(--link-blog-normal);
+        }
+
+        &.email {
+            color: #ef5777;
+        }
+
+        &.gitea {
+            color: var(--link-gitea-normal);
+        }
+
         &.github {
             color: var(--link-gh-normal);
         }
@@ -93,12 +109,8 @@ footer {
             color: #3088d4;
         }
 
-        &.email {
-            color: #ef5777;
-        }
-
-        &.blog {
-            color: var(--link-blog-normal);
+        &.pixelfed {
+            color: var(--link-pf-normal);
         }
     }
 }

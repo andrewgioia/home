@@ -1,7 +1,9 @@
 $icon-arrow:        '\e902';
 $icon-email:        '\e903';
+$icon-gitea:        '\e908';
 $icon-github:       '\e900';
 $icon-mastodon:     '\e901';
+$icon-pixelfed:     '\e909';
 $icon-rss:          '\e907';
 
 @font-face {
@@ -17,7 +19,8 @@ $icon-rss:          '\e907';
     font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
     font-family: 'andrew' !important; // !i to prevent issues with browser extensions that change fonts
     speak: never;
     font-style: normal;
@@ -31,19 +34,25 @@ $icon-rss:          '\e907';
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-arrow:before {
+.icon-arrow::before {
     content: $icon-arrow;
 }
-.icon-email:before {
+.icon-email::before {
     content: $icon-email;
 }
-.icon-github:before {
+.icon-gitea::before {
+    content: $icon-gitea;
+}
+.icon-github::before {
     content: $icon-github;
 }
-.icon-mastodon:before {
+.icon-mastodon::before {
     content: $icon-mastodon;
 }
-.icon-rss:before {
+.icon-pixelfed::before {
+    content: $icon-pixelfed;
+}
+.icon-rss::before {
     content: $icon-rss;
     font-weight: 900;
 }

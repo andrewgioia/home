@@ -19,11 +19,17 @@
         }
     }
     footer {
+        a.blog {
+            color: var(--link-blog-dark);
+        }
+        a.gitea {
+            color: var(--link-gitea-dark);
+        }
         a.github {
             color: var(--link-gh-dark);
         }
-        a.blog {
-            color: var(--link-blog-dark);
+        a.pixelfed {
+            color: var(--link-pf-dark);
         }
     }
 }
