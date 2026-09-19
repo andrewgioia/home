@@ -8,10 +8,11 @@
     "normalize.css": "^8.0.1"
   },
   "devDependencies": {
+    "sass": "^1.104.1"
   },
   "scripts": {
-    "dev": "sass --no-source-map src/scss/theme.scss dist/site.css && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist",
-    "prod": "sass --no-source-map src/scss/theme.scss dist/site.css --style compressed && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist",
+    "dev": "sass --no-source-map src/scss/theme.scss dist/site.css && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist && cp -R src/chromatic dist",
+    "prod": "sass --no-source-map src/scss/theme.scss dist/site.css --style compressed && cp src/index.html dist/index.html && cp -R src/img dist && cp -R src/icons dist && cp -R src/chromatic dist",
     "watch": "sass --no-source-map --watch src/scss/theme.scss dist/site.css",
     "publish": "rsync -av --delete dist/ /var/www/andrewgioia.com"
   },
