@@ -4,100 +4,453 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="Chromatic. macOS menu bar app for color contrast accessibility.">
-  <title>Chromatic — Color contrast accessibility</title>
+  <meta name="description" content="macOS menu bar app to check color contrast against WCAG accessibility standards.">
+  <title>Chromatic</title>
   <link rel="canonical" href="https://andrewgioia.com/chromatic/">
-  <link rel="icon" href="./app-icon.png" type="image/png">
-  <style>
-    :root {
-      color-scheme: dark;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #1a1a1a;
-      color: #fff;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; }
-    .landing {
-      /* The 2560 × 1600 image has its window centered horizontally,
-         inside x=880…1680 and y=64…960 (including room for the shadow).
-         Fit that region, reserving space below for the identity. */
-      --image-width: min(1920px, calc((100vw - 48px) * 3.2), calc((max(100svh, 540px) - 190px) * 2.666667));
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      isolation: isolate;
-      min-height: max(100svh, 540px);
-      overflow: hidden;
-      background: #1a1a1a;
-    }
-    .scene {
-      position: absolute;
-      z-index: -1;
-      width: var(--image-width);
-      max-width: none;
-      height: auto;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .menu-bar {
-      position: absolute;
-      inset: 4px 0 auto;
-      height: clamp(24px, calc(var(--image-width) * 0.022), 40px);
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding-inline: clamp(12px, 2vw, 24px);
-      pointer-events: none;
-      font-size: clamp(11px, 1.2vw, 14px);
-      line-height: 1;
-    }
-    .menu-bar img { display: block; height: 18px; width: auto; }
-    .menu-bar .menu-brand { display: flex; align-items: center; gap: 12px; }
-    .menu-bar .menu-icon { width: 18px; justify-self: center; }
-    .menu-bar time { justify-self: end; white-space: pre; }
-    .identity {
-      position: relative;
-      padding: calc(var(--image-width) * 0.375 + 24px + 2rem) 24px 40px;
-      text-align: center;
-      text-shadow: 0 2px 16px rgb(0 0 0 / 30%);
-    }
-    .brand { display: flex; justify-content: center; align-items: center; gap: 14px; }
-    .brand img { width: 64px; height: 64px; }
-    h1 { font-size: clamp(32px, 4vw, 42px); line-height: 1.15; letter-spacing: -0.035em; font-weight: 600; margin: 0; }
-    p { max-width: 420px; margin: 12px auto 0; font-size: 16px; line-height: 1.5; text-wrap: balance; }
-    footer {
-      margin-top: auto;
-      padding: 0 24px 2rem;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #d0d0d0;
-    }
-    footer a { color: inherit; text-underline-offset: 3px; }
-    footer a:hover { color: #fff; }
-    footer a:focus-visible { outline: 2px solid #aaffff; outline-offset: 4px; }
-  </style>
+  <link rel="icon" href="app-icon.png" type="image/png">
+  <link rel="stylesheet" type="text/css" href="main.css" media="all" />
 </head>
 <body>
-  <main class="landing">
-    <img class="scene" src="./app.png" width="2560" height="1600" alt="Chromatic showing foreground and background colors, a live preview, and WCAG contrast results." fetchpriority="high">
-    <div class="menu-bar" aria-hidden="true">
-      <div class="menu-brand">
-        <img src="./apple-icon.svg" alt="" width="23" height="29">
-        <span>Chromatic</span>
-      </div>
-      <img class="menu-icon" src="./menu-icon.svg" alt="" width="30" height="30">
-      <time>Fri Aug 20  17:30</time>
-    </div>
-    <header class="identity">
-      <div class="brand">
-        <img src="./app-icon.png" width="64" height="64" alt="">
-        <h1>Chromatic</h1>
-      </div>
-      <p>macOS menu bar app for color contrast accessibility.</p>
-    </header>
-    <footer>© 2026 Andrew Gioia / <a href="https://prismatichq.com">prismatichq.com</a></footer>
+  <header>
+    <h1>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15.7541 20.3223">
+        <g>
+          <rect height="20.3223" opacity="0" width="15.7541" x="0" y="0"/>
+          <path d="M11.6515 4.64844C10.0694 4.53125 8.70226 5.54688 7.96984 5.54688C7.20812 5.54688 6.03624 4.6875 4.77648 4.70703C3.14562 4.7168 1.65148 5.6543 0.792101 7.10938C-0.887587 10.0586 0.381944 14.4336 2.02257 16.8066C2.82335 17.998 3.79991 19.3066 5.06944 19.2676C6.28038 19.209 6.73937 18.4668 8.22374 18.4668C9.70812 18.4668 10.0987 19.2676 11.3878 19.2285C12.7159 19.209 13.5265 18.0469 14.3566 16.875C15.2745 15.498 15.6651 14.1895 15.6749 14.1211C15.6359 14.1211 13.1163 13.1445 13.0968 10.2344C13.0773 7.80273 15.089 6.61133 15.1671 6.5625C14.0245 4.89258 12.2569 4.70703 11.6515 4.64844ZM10.6651 3.07617C11.339 2.25586 11.7882 1.13281 11.671 0C10.7042 0.0292969 9.53234 0.644531 8.82921 1.45508C8.22374 2.17773 7.67687 3.33984 7.82335 4.43359C8.90734 4.51172 10.0011 3.88672 10.6651 3.07617Z" fill="white" fill-opacity="0.85"/>
+        </g>
+      </svg>
+      <span>Chromatic</span>
+    </h1>
+    <nav>
+      <button id="toggle" type="button" aria-label="Toggle Chromatic" aria-controls="app" aria-expanded="true">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20.2832 19.9316">
+          <g>
+            <rect height="19.9316" opacity="0" width="20.2832" x="0" y="0"/>
+            <path d="M9.96094 18.8867C15.0391 18.8867 18.8965 15.0391 18.8965 9.96094C18.8965 4.88281 15.0391 1.02539 9.96094 1.02539ZM9.96094 19.9219C15.459 19.9219 19.9219 15.459 19.9219 9.96094C19.9219 4.46289 15.459 0 9.96094 0C4.46289 0 0 4.46289 0 9.96094C0 15.459 4.46289 19.9219 9.96094 19.9219ZM9.96094 18.2617C5.37109 18.2617 1.66016 14.5508 1.66016 9.96094C1.66016 5.37109 5.37109 1.66016 9.96094 1.66016C14.5508 1.66016 18.2617 5.37109 18.2617 9.96094C18.2617 14.5508 14.5508 18.2617 9.96094 18.2617Z" fill="white" fill-opacity="0.85"/>
+          </g>
+        </svg>
+      </button>
+    </nav>
+    <aside>
+      <span id="menu-date"></span>
+      <time id="menu-time"></time>
+    </aside>
+  </header>
+  <main id="app" data-popover>
+    <svg class="outline" width="100%" height="100%" aria-hidden="true">
+      <defs>
+        <path id="shape" d="M 24 20 H 178 Q 183 20 187 16 L 196 7 Q 200 3 204 7 L 213 16 Q 217 20 222 20 H 376 Q 399 20 399 44 V 276 Q 399 299 376 299 H 24 Q 1 299 1 276 V 44 Q 1 20 24 20 Z"/>
+        <clipPath id="clip">
+          <use href="#shape" />
+        </clipPath>
+      </defs>
+      <!-- dark outer edge, fine light rim inside it -->
+      <use href="#shape"
+           fill="none" stroke="#000" stroke-opacity="0.85"
+           stroke-width="1.5" />
+      <use href="#shape"
+           fill="none" stroke="#fff" stroke-opacity="0.4"
+           stroke-width="2" clip-path="url(#clip)" />
+    </svg>
+    <div class="glass" aria-hidden="true"></div>
+    <article>
+      <section id="summary">
+        <h2 id="score">
+          4.51
+        </h2>
+        <span id="badge" data-status="aa">
+          Meets AA
+        </span>
+      </section>
+      <section id="pickers">
+        <div class="bg group">
+          <label for="bgcolor">
+            Background
+          </label>
+          <div class="picker">
+            <input type="color" aria-label="Background color" name="bgcolor" value="#252b2a" />
+            <input type="text" class="hex" id="bgcolor" value="#252b2a" />
+            <button class="eye" id="bgpicker" type="button" aria-label="Pick background color">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20.7422 20.7129">
+                <g>
+                  <rect height="20.7129" opacity="0" width="20.7422" x="0" y="0"/>
+                  <path d="M12.9883 8.93555L4.13086 17.7832C3.78906 18.1348 3.33984 18.2422 3.00781 17.8809C2.64648 17.4902 2.72461 17.1191 3.10547 16.7285L11.9336 7.86133L11.0938 7.03125L3.20312 14.9219C0.185547 17.9395 1.64062 17.4707 0 19.7852L0.878906 20.7129C3.11523 19.082 2.8125 20.6836 5.87891 17.627L13.7988 9.75586ZM15.3125 10.7031L15.5859 10.4004C16.0645 9.90234 16.0938 9.31641 15.5762 8.80859L15.2832 8.52539C16.7773 7.1875 18.4375 7.00195 19.4629 5.95703C20.918 4.49219 20.4492 2.44141 19.4238 1.41602C18.4082 0.380859 16.377-0.0585938 14.8828 1.37695C13.8281 2.39258 13.6523 4.0625 12.3145 5.55664L12.0312 5.26367C11.5332 4.75586 10.9375 4.77539 10.4395 5.25391L10.1465 5.52734C9.54102 6.10352 9.6582 6.61133 10.166 7.12891L13.7109 10.6738C14.2285 11.1914 14.7461 11.2988 15.3125 10.7031Z" fill="currentColor" fill-opacity="0.85"/>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="swap">
+          <button>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 19.1993 23.0762">
+              <g>
+                <rect height="23.0762" opacity="0" width="19.1993" x="0" y="0"/>
+                <path d="M17.0508 16.543L13.9258 16.3477L0.869186 16.3477C0.37114 16.3477 4.57621e-05 16.709 4.57621e-05 17.2168C4.57621e-05 17.7344 0.37114 18.0957 0.869186 18.0957L13.9258 18.0957L17.0508 17.8809C17.4903 17.8418 17.7247 17.5293 17.7247 17.207C17.7247 16.8848 17.4903 16.5723 17.0508 16.543ZM12.2559 21.6016C12.0899 21.7676 12.0118 21.9629 12.0118 22.2168C12.0118 22.7246 12.3536 23.0762 12.8711 23.0762C13.0957 23.0762 13.3497 22.9688 13.5157 22.8027L18.5547 17.8809C18.9356 17.5098 18.9454 16.9434 18.5547 16.5625L13.5157 11.6406C13.3497 11.4746 13.0957 11.3672 12.8711 11.3672C12.3536 11.3672 12.0118 11.7188 12.0118 12.2266C12.0118 12.4805 12.0899 12.6758 12.2559 12.832L14.3555 14.873L17.1192 17.2168L14.3555 19.5703Z" fill="currentColor" fill-opacity="0.9"/>
+                <path d="M1.78716 5.17578C1.3477 5.20508 1.11333 5.52734 1.11333 5.84961C1.11333 6.17188 1.3477 6.48438 1.78716 6.52344L4.92192 6.73828L17.9688 6.73828C18.4766 6.73828 18.8379 6.37695 18.8379 5.85938C18.8379 5.35156 18.4766 4.99023 17.9688 4.99023L4.92192 4.99023ZM6.58208 10.2441L4.48247 8.21289L1.72856 5.85938L4.48247 3.51562L6.58208 1.47461C6.74809 1.30859 6.83598 1.12305 6.83598 0.869141C6.83598 0.361328 6.48442 0.00976562 5.96684 0.00976562C5.752 0.00976562 5.49809 0.107422 5.32231 0.283203L0.293015 5.20508C-0.107376 5.58594-0.0878449 6.15234 0.293015 6.51367L5.32231 11.4355C5.49809 11.6113 5.752 11.7188 5.96684 11.7188C6.48442 11.7188 6.83598 11.3574 6.83598 10.8496C6.83598 10.6055 6.74809 10.4102 6.58208 10.2441Z" fill="currentColor" fill-opacity="0.9"/>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div class="fg group">
+          <label for="fgcolor">
+            Foreground
+          </label>
+          <div class="picker">
+            <input type="color" aria-label="Foreground color" value="#aaffff" />
+            <input type="text" class="hex" id="fgcolor" value="#aaffff" />
+            <button class="eye" id="fgpicker" type="button" aria-label="Pick foreground color">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20.7422 20.7129">
+                <g>
+                  <rect height="20.7129" opacity="0" width="20.7422" x="0" y="0"/>
+                  <path d="M12.9883 8.93555L4.13086 17.7832C3.78906 18.1348 3.33984 18.2422 3.00781 17.8809C2.64648 17.4902 2.72461 17.1191 3.10547 16.7285L11.9336 7.86133L11.0938 7.03125L3.20312 14.9219C0.185547 17.9395 1.64062 17.4707 0 19.7852L0.878906 20.7129C3.11523 19.082 2.8125 20.6836 5.87891 17.627L13.7988 9.75586ZM15.3125 10.7031L15.5859 10.4004C16.0645 9.90234 16.0938 9.31641 15.5762 8.80859L15.2832 8.52539C16.7773 7.1875 18.4375 7.00195 19.4629 5.95703C20.918 4.49219 20.4492 2.44141 19.4238 1.41602C18.4082 0.380859 16.377-0.0585938 14.8828 1.37695C13.8281 2.39258 13.6523 4.0625 12.3145 5.55664L12.0312 5.26367C11.5332 4.75586 10.9375 4.77539 10.4395 5.25391L10.1465 5.52734C9.54102 6.10352 9.6582 6.61133 10.166 7.12891L13.7109 10.6738C14.2285 11.1914 14.7461 11.2988 15.3125 10.7031Z" fill="currentColor" fill-opacity="0.85"/>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+      <section id="preview">
+        <div class="group">
+          <label for="preview">
+            Preview
+          </label>
+          <div class="weather">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 29.873 21.1035">
+              <g>
+                <rect height="21.1035" opacity="0" width="29.873" x="0" y="0"/>
+                <path d="M25.4199 14.9512L26.9336 16.4551C27.2461 16.7676 27.2461 17.2852 26.9336 17.5879C26.6211 17.9004 26.1035 17.9199 25.8008 17.5977L24.2773 16.0938C23.9648 15.7812 23.9648 15.2637 24.2773 14.9512C24.5898 14.6484 25.1074 14.6484 25.4199 14.9512ZM24.5898 10.4297C24.5898 12.1704 23.6504 13.7099 22.2576 14.5596C21.9842 11.7184 19.7028 9.57947 16.709 9.27734C16.3967 8.78437 16.0391 8.3347 15.6397 7.93678C16.4876 6.53355 18.0276 5.58594 19.7656 5.58594C22.4023 5.58594 24.5898 7.7832 24.5898 10.4297ZM29.873 10.4297C29.873 10.8789 29.5117 11.2402 29.0723 11.2402L26.9531 11.2402C26.5234 11.2402 26.1426 10.8789 26.1426 10.4297C26.1426 10 26.5234 9.61914 26.9531 9.61914L29.0723 9.61914C29.5117 9.61914 29.873 10 29.873 10.4297ZM26.9336 3.27148C27.2461 3.58398 27.2461 4.11133 26.9336 4.42383L25.4297 5.91797C25.1074 6.24023 24.5898 6.23047 24.2773 5.91797C23.9648 5.60547 23.9648 5.08789 24.2773 4.78516L25.8008 3.27148C26.1035 2.95898 26.6211 2.95898 26.9336 3.27148ZM13.75 3.27148L15.2539 4.78516C15.5566 5.07812 15.5566 5.61523 15.2441 5.91797C14.9316 6.23047 14.4141 6.23047 14.1016 5.91797L12.6074 4.41406C12.2949 4.11133 12.3047 3.58398 12.6172 3.27148C12.9297 2.95898 13.4473 2.96875 13.75 3.27148ZM20.5762 1.10352L20.5762 3.23242C20.5762 3.66211 20.2051 4.0332 19.7656 4.0332C19.3262 4.0332 18.9551 3.66211 18.9551 3.23242L18.9551 1.10352C18.9551 0.673828 19.3262 0.292969 19.7656 0.292969C20.2051 0.292969 20.5762 0.673828 20.5762 1.10352Z" fill="currentColor" fill-opacity="1"/>
+                <path d="M5.64453 19.9609L16.2109 19.9609C18.9941 19.9609 21.1523 17.8516 21.1523 15.1367C21.1523 12.4414 18.9551 10.4004 16.0352 10.3809C14.9121 8.24219 12.8906 6.93359 10.4785 6.93359C7.29492 6.93359 4.59961 9.4043 4.29688 12.6172C2.67578 13.1055 1.57227 14.4922 1.57227 16.25C1.57227 18.418 3.20312 19.9609 5.64453 19.9609Z" fill="currentColor" fill-opacity="1"/>
+              </g>
+            </svg>
+            <div class="text">
+              <div class="primary">
+                <span class="temp">76°</span>
+                <span class="meta">
+                  <span class="hilo">80↑&nbsp;&nbsp;72↓</span>
+                  <span class="locale">Philadelphia, PA</span>
+                </span>
+              </div>
+              <div class="secondary">
+                Partly cloudy for the next hour.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="results">
+        <div class="wcag">
+          <div class="standard aa">
+            <abbr title="WCAG 2.2 AA requires a minimum contrast ratio of 4.5:1 for regular text and 3:1 for large text.">
+              AA
+            </abbr>
+            <div class="regular result" id="aa-regular">
+              <b>✅</b>
+              <span>Regular text</span>
+            </div>
+            <div class="large result" id="aa-large">
+              <b>✅</b>
+              <span>Large text</span>
+            </div>
+          </div>
+          <div class="standard aaa">
+            <abbr title="WCAG 2.2 AAA requires a minimum contrast ratio of 7:1 for regular text and 4.5:1 for large text.">
+              AAA
+            </abbr>
+            <div class="regular result" id="aaa-regular">
+              <b>❌</b>
+              <span>Regular text</span>
+            </div>
+            <div class="large result" id="aaa-large">
+              <b>✅</b>
+              <span>Large text</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="actions">
+        <div class="left">
+          <button id="settings" type="button" aria-label="Chromatic settings" aria-controls="settings-menu" aria-expanded="false" popovertarget="settings-menu">
+            <svg viewBox="0 0 21.2598 20.8887" fill="currentColor" fill-opacity="0.9" aria-hidden="true">
+              <path d="M9.463 20.879L11.435 20.879C12.188 20.879 12.773 20.42 12.94 19.697L13.359 17.871L13.672 17.764L15.264 18.74C15.898 19.131 16.631 19.043 17.168 18.506L18.535 17.148C19.072 16.611 19.16 15.869 18.77 15.244L17.773 13.662L17.891 13.369L19.717 12.94C20.43 12.773 20.898 12.178 20.898 11.435L20.898 9.502C20.898 8.76 20.439 8.174 19.717 7.998L17.91 7.559L17.783 7.246L18.779 5.664C19.17 5.039 19.092 4.307 18.545 3.76L17.178 2.393C16.65 1.865 15.918 1.768 15.283 2.158L13.691 3.135L13.359 3.008L12.94 1.182C12.773 .459 12.188 0 11.435 0L9.463 0C8.711 0 8.125 .459 7.959 1.182L7.529 3.008L7.197 3.135L5.615 2.158C4.98 1.768 4.238 1.865 3.711 2.393L2.354 3.76C1.807 4.307 1.719 5.039 2.119 5.664L3.105 7.246L2.988 7.559L1.182 7.998C.459 8.174 0 8.76 0 9.502L0 11.435C0 12.178 .469 12.773 1.182 12.94L3.008 13.369L3.115 13.662L2.129 15.244C1.729 15.869 1.826 16.611 2.363 17.148L3.721 18.506C4.258 19.043 5 19.131 5.635 18.74L7.217 17.764L7.529 17.871L7.959 19.697C8.125 20.42 8.711 20.879 9.463 20.879ZM9.619 19.355C9.453 19.355 9.365 19.287 9.336 19.131L8.75 16.709C8.154 16.562 7.598 16.328 7.178 16.064L5.049 17.373C4.932 17.461 4.795 17.451 4.688 17.324L3.535 16.172C3.428 16.064 3.418 15.947 3.496 15.81L4.805 13.701C4.58 13.291 4.326 12.734 4.17 12.139L1.748 11.562C1.592 11.533 1.523 11.445 1.523 11.279L1.523 9.648C1.523 9.473 1.582 9.395 1.748 9.365L4.16 8.779C4.316 8.145 4.609 7.568 4.785 7.207L3.486 5.098C3.398 4.951 3.408 4.834 3.516 4.717L4.678 3.584C4.795 3.467 4.902 3.457 5.049 3.535L7.158 4.814C7.578 4.58 8.174 4.336 8.76 4.17L9.336 1.748C9.365 1.592 9.453 1.523 9.619 1.523L11.279 1.523C11.445 1.523 11.533 1.592 11.553 1.748L12.148 4.189C12.754 4.346 13.281 4.59 13.721 4.824L15.84 3.535C15.996 3.457 16.094 3.467 16.221 3.584L17.373 4.717C17.49 4.834 17.49 4.951 17.402 5.098L16.104 7.207C16.289 7.568 16.572 8.145 16.729 8.779L19.15 9.365C19.307 9.395 19.375 9.473 19.375 9.648L19.375 11.279C19.375 11.445 19.297 11.533 19.15 11.562L16.719 12.139C16.562 12.734 16.318 13.291 16.084 13.701L17.393 15.81C17.471 15.947 17.471 16.064 17.354 16.172L16.211 17.324C16.094 17.451 15.967 17.461 15.84 17.373L13.711 16.064C13.291 16.328 12.744 16.562 12.148 16.709L11.553 19.131C11.533 19.287 11.445 19.355 11.279 19.355ZM10.449 14.16C12.51 14.16 14.17 12.5 14.17 10.44C14.17 8.379 12.51 6.719 10.449 6.719C8.389 6.719 6.729 8.379 6.729 10.44C6.729 12.5 8.389 14.16 10.449 14.16ZM10.449 12.646C9.229 12.646 8.242 11.66 8.242 10.44C8.242 9.219 9.229 8.232 10.449 8.232C11.67 8.232 12.656 9.219 12.656 10.44C12.656 11.66 11.67 12.646 10.449 12.646Z"/>
+            </svg>
+          </button>
+          <button id="adjust" type="button" aria-label="Adjust contrast" aria-controls="adjust-menu" aria-expanded="false" popovertarget="adjust-menu">
+            <svg viewBox="0 0 20.6445 20.6348" fill="white" fill-opacity="0.925" aria-hidden="true">
+              <path d="M13.662 7.07C13.799 7.07 13.906 6.973 13.935 6.826C14.365 4.629 14.658 4.15 16.934 3.818C17.09 3.799 17.188 3.682 17.188 3.545C17.188 3.389 17.09 3.271 16.934 3.252C14.658 2.92 14.268 2.393 13.935 .264C13.906 .098 13.799 0 13.662 0C13.506 0 13.398 .098 13.369 .254C12.94 2.432 12.646 2.92 10.381 3.252C10.215 3.271 10.117 3.389 10.117 3.545C10.117 3.682 10.215 3.789 10.381 3.818C12.646 4.15 13.027 4.629 13.369 6.816C13.389 6.973 13.486 7.07 13.662 7.07ZM2.773 15.078C2.92 15.078 3.018 14.98 3.037 14.844C3.33 13.008 3.33 12.871 5.322 12.559C5.459 12.539 5.557 12.451 5.557 12.305C5.557 12.158 5.459 12.07 5.322 12.051C3.33 11.738 3.33 11.602 3.037 9.766C3.018 9.629 2.92 9.531 2.773 9.531C2.637 9.531 2.539 9.629 2.52 9.766C2.227 11.602 2.227 11.738 .234 12.051C.098 12.07 0 12.158 0 12.305C0 12.451 .098 12.539 .234 12.559C2.227 12.871 2.227 13.008 2.52 14.844C2.539 14.98 2.637 15.078 2.773 15.078ZM6.035 17.832C6.152 17.832 6.23 17.744 6.26 17.627C6.436 16.543 6.387 16.494 7.627 16.27C7.744 16.24 7.822 16.152 7.822 16.045C7.822 15.938 7.744 15.84 7.627 15.82C6.396 15.596 6.455 15.566 6.26 14.453C6.23 14.346 6.143 14.258 6.035 14.258C5.918 14.258 5.84 14.346 5.811 14.473C5.576 15.566 5.674 15.625 4.453 15.82C4.326 15.84 4.248 15.928 4.248 16.045C4.248 16.152 4.326 16.24 4.443 16.27C5.674 16.494 5.576 16.543 5.811 17.627C5.84 17.744 5.918 17.832 6.035 17.832Z"/>
+              <path d="M17.285 18.926C17.715 19.365 18.428 19.355 18.838 18.926C19.258 18.486 19.258 17.822 18.828 17.373L6.348 4.893C5.918 4.453 5.205 4.453 4.795 4.893C4.375 5.332 4.375 5.996 4.805 6.436ZM8.828 9.404L5.469 6.035C5.332 5.898 5.332 5.693 5.469 5.557C5.596 5.43 5.811 5.42 5.947 5.557L9.316 8.936Z"/>
+            </svg>
+          </button>
+          <button id="export" type="button" aria-label="Copy color values" aria-controls="export-menu" aria-expanded="false" popovertarget="export-menu">
+            <svg viewBox="0 0 27.7344 18.4962" fill="white" fill-opacity="0.925" aria-hidden="true">
+              <path d="M11.016 18.462C11.533 18.599 12.002 18.316 12.158 17.798L17.021 1.128C17.158 .659 16.934 .19 16.416 .054C15.908-.083 15.469 .112 15.293 .718L10.459 17.3C10.303 17.827 10.469 18.316 11.016 18.462Z"/>
+              <path d="M0 9.243C0 9.517 .117 9.78 .342 9.976L6.865 15.864C7.275 16.235 7.822 16.235 8.164 15.854C8.506 15.464 8.447 14.917 8.057 14.566L2.188 9.243L8.057 3.921C8.447 3.569 8.506 3.013 8.164 2.632C7.822 2.251 7.275 2.251 6.865 2.622L.342 8.501C.117 8.706 0 8.97 0 9.243ZM27.373 9.243C27.373 8.97 27.266 8.706 27.041 8.501L20.518 2.622C20.098 2.251 19.561 2.251 19.219 2.632C18.877 3.013 18.926 3.569 19.316 3.921L25.195 9.243L19.316 14.566C18.926 14.917 18.877 15.464 19.219 15.854C19.561 16.235 20.098 16.235 20.518 15.864L27.041 9.976C27.266 9.78 27.373 9.517 27.373 9.243Z"/>
+            </svg>
+          </button>
+          <button id="history" type="button" aria-label="Color history" aria-controls="history-menu" aria-expanded="false" popovertarget="history-menu">
+            <svg viewBox="0 0 24.0651 19.9316" fill="white" fill-opacity="0.85" aria-hidden="true">
+              <path d="M.695 8.076C-.008 8.076-.184 8.555 .197 9.102L2.384 12.207C2.706 12.656 3.175 12.646 3.488 12.207L5.665 9.092C6.046 8.555 5.861 8.076 5.177 8.076ZM21.818 9.961C21.818 4.463 17.355 0 11.857 0C6.359 0 1.906 4.453 1.896 9.971C1.906 10.43 2.267 10.791 2.716 10.791C3.175 10.791 3.556 10.42 3.556 9.961C3.556 5.371 7.267 1.66 11.857 1.66C16.447 1.66 20.158 5.371 20.158 9.961C20.158 14.551 16.447 18.262 11.857 18.262C9.074 18.262 6.622 16.895 5.138 14.824C4.835 14.424 4.376 14.297 3.966 14.541C3.576 14.785 3.458 15.342 3.79 15.771C5.607 18.291 8.507 19.922 11.857 19.922C17.355 19.922 21.818 15.459 21.818 9.961Z"/>
+              <path d="M11.857 4.248C11.408 4.248 11.046 4.6 11.046 5.049L11.046 10.566C11.046 10.801 11.124 10.996 11.29 11.221L13.654 14.336C13.995 14.785 14.474 14.854 14.884 14.57C15.245 14.316 15.284 13.828 14.982 13.408L11.769 9.062L12.658 11.787L12.658 5.049C12.658 4.6 12.296 4.248 11.857 4.248Z"/>
+            </svg>
+          </button>
+        </div>
+        <button id="close" type="button">
+          <span>Close</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6 18 18M18 6 6 18" />
+          </svg>
+        </button>
+      </section>
+    </article>
+    <menu id="settings-menu" class="context-menu" popover="auto" aria-label="Chromatic settings">
+      <li>
+        <button id="about" type="button">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 11v6m0-10v.01"/>
+          </svg>
+          <span>About Chromatic</span>
+        </button>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li>
+        <label title="While this page is active; some browsers reserve this shortcut.">
+          <input id="foreground-shortcut" type="checkbox" autofocus>
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 16h10"/>
+          </svg>
+          <span>Pick foreground with ⌘⇧O</span>
+        </label>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li>
+        <label title="">
+          <input id="show-preview" type="checkbox" checked>
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>
+          </svg>
+          <span>Show preview</span>
+        </label>
+      </li>
+      <li>
+        <label title="">
+          <input id="show-results" type="checkbox" checked>
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="4" r="2"/><path d="m4 8 8 2 8-2m-8 2v5m0 0-5 7m5-7 5 7"/>
+          </svg>
+          <span>Show WCAG results</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input id="minimal-mode" type="checkbox">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="7" width="20" height="10" rx="3"/>
+            <path d="M12 1v4m-2-2 2 2 2-2m-2 20v-4m-2 2 2-2 2 2"/>
+          </svg>
+          <span>Use minimal menubar UI</span>
+        </label>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li>
+        <button id="copy-contrast" type="button">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="8" y="8" width="13" height="13" rx="2"/>
+            <path d="M16 5V3H3v13h2"/>
+          </svg>
+          <span>Copy contrast value</span>
+        </button>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li>
+        <button id="quit" type="button">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2v10m-6-7a9 9 0 1 0 12 0"/>
+          </svg>
+          <span>Quit Chromatic completely</span>
+        </button>
+      </li>
+    </menu>
+    <menu id="adjust-menu" class="context-menu no-checkboxes" popover="auto" aria-label="Adjust contrast">
+      <li class="menu-heading">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 15 9-5 9 5-9 5Z"/>
+          <path d="m3 8 9-5 9 5-9 5Z" fill="currentColor"/>
+        </svg>
+        <span>Foreground color</span>
+      </li>
+      <li>
+        <button type="button" data-color="foreground" data-ratio="3.0" aria-label="Adjust foreground to 3.0:1" autofocus>
+          <span>Adjust to 3.0:1</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="foreground" data-ratio="4.5" aria-label="Adjust foreground to 4.5:1">
+          <span>Adjust to 4.5:1</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="foreground" data-ratio="7" aria-label="Adjust foreground to 7:1">
+          <span>Adjust to 7:1</span>
+        </button>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li class="menu-heading">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 15 9-5 9 5-9 5Z" fill="currentColor"/>
+          <path d="m3 8 9-5 9 5-9 5Z"/>
+        </svg>
+        <span>Background color</span>
+      </li>
+      <li>
+        <button type="button" data-color="background" data-ratio="3.0" aria-label="Adjust background to 3.0:1">
+          <span>Adjust to 3.0:1</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="background" data-ratio="4.5" aria-label="Adjust background to 4.5:1">
+          <span>Adjust to 4.5:1</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="background" data-ratio="7" aria-label="Adjust background to 7:1">
+          <span>Adjust to 7:1</span>
+        </button>
+      </li>
+    </menu>
+    <menu id="export-menu" class="context-menu no-checkboxes" popover="auto" aria-label="Copy color values">
+      <li class="menu-heading">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 15 9-5 9 5-9 5Z"/>
+          <path d="m3 8 9-5 9 5-9 5Z" fill="currentColor"/>
+        </svg>
+        <span>Foreground color</span>
+      </li>
+      <li>
+        <button type="button" data-color="foreground" data-format="hex" aria-label="Copy foreground HEX" autofocus>
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 3 7 21M17 3l-2 18M3 9h18M2 15h18"/>
+          </svg>
+          <span>Copy hex code</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="foreground" data-format="rgb" aria-label="Copy foreground RGB">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="5"/>
+            <circle cx="8" cy="15" r="5"/>
+            <circle cx="16" cy="15" r="5"/>
+          </svg>
+          <span>Copy RGB value</span>
+        </button>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li class="menu-heading">
+        <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 15 9-5 9 5-9 5Z" fill="currentColor"/>
+          <path d="m3 8 9-5 9 5-9 5Z"/>
+        </svg>
+        <span>Background color</span>
+      </li>
+      <li>
+        <button type="button" data-color="background" data-format="hex" aria-label="Copy background HEX">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 3 7 21M17 3l-2 18M3 9h18M2 15h18"/>
+          </svg>
+          <span>Copy hex code</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" data-color="background" data-format="rgb" aria-label="Copy background RGB">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="5"/>
+            <circle cx="8" cy="15" r="5"/>
+            <circle cx="16" cy="15" r="5"/>
+          </svg>
+          <span>Copy RGB value</span>
+        </button>
+      </li>
+    </menu>
+    <menu id="history-menu" class="context-menu no-checkboxes" popover="auto" aria-label="Color history" tabindex="-1">
+      <li id="history-empty" class="menu-heading">
+        <span>No colors picked yet</span>
+      </li>
+      <li class="menu-separator">
+        <hr>
+      </li>
+      <li>
+        <button id="clear-history" type="button" disabled>
+          <span class="menu-icon" aria-hidden="true">👻</span>
+          <span>Clear history</span>
+        </button>
+      </li>
+    </menu>
   </main>
+  <footer>
+    <div id="logo">
+      <img src="app-icon.png" alt="Chromatic app icon" width="48px" />
+      <strong>Chromatic</strong>
+    </div>
+    <div id="words">
+      <p>
+        Lightweight macOS menu bar app for color contrast accessibility.
+      </p>
+      <p>
+        Designed and built by <a href="https://prismatichq.com">Andrew Gioia</a>
+      </p>
+      <p>
+        &copy; 2026 Prismatic, LLC
+      </p>
+    </div>
+    <p>
+      <a href="https://apple.com">
+        <img src="app-store.svg" alt="Download Chromatic on the Mac App Store" width="156" height="40" />
+      </a>
+    </p>
+  </footer>
+  <p id="notice" role="status"></p>
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <form method="dialog" class="about-close">
+      <button type="submit" aria-label="Close About Chromatic" autofocus>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg>
+      </button>
+    </form>
+    <img src="app-icon.png" width="80" height="80" alt="">
+    <h2 id="about-title">Chromatic</h2>
+    <!-- Keep release metadata in sync with Configuration/App.xcconfig. -->
+    <div class="about-version">
+      <p>v1.0.0</p>
+      <p>Released <time datetime="2026-09-20">2026-09-20</time></p>
+    </div>
+    <div class="about-author">
+      <p>© Andrew Gioia</p>
+      <a href="https://prismatichq.com">prismatichq.com</a>
+    </div>
+  </dialog>
+  <dialog id="copy-dialog" aria-labelledby="copy-title">
+    <h2 id="copy-title">
+      Copy contrast value
+    </h2>
+    <p>
+      Automatic copying is unavailable. Copy the selected text using your usual keyboard shortcut.
+    </p>
+    <textarea id="copy-report" aria-label="Contrast report" readonly rows="7"></textarea>
+    <form method="dialog">
+      <button>Done</button>
+    </form>
+  </dialog>
+  <script src="main.js"></script>
 </body>
-</html>
