@@ -211,6 +211,15 @@
           <span>About Chromatic</span>
         </button>
       </li>
+      <li>
+        <button id="help" type="button">
+          <svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 4m0 3v.01"/>
+          </svg>
+          <span>Chromatic Help</span>
+        </button>
+      </li>
       <li class="menu-separator">
         <hr>
       </li>
@@ -438,6 +447,65 @@
     <div class="about-author">
       <p>© Andrew Gioia</p>
       <a href="https://prismatichq.com">prismatichq.com</a>
+    </div>
+  </dialog>
+  <!-- Help copy mirrors Chromatic/Views/Help.swift and describes the macOS app. -->
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <form method="dialog" class="help-toolbar">
+      <button type="submit" aria-label="Close Chromatic Help" autofocus>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg>
+      </button>
+    </form>
+    <div class="help-content" tabindex="0" role="region" aria-label="Chromatic help guide">
+      <div class="help-introduction">
+        <h2 id="help-title"><img src="help/contrast.svg" width="24" height="24" alt="">Using Chromatic</h2>
+        <p>Pick two colors and check their contrast. Chromatic compares foreground and background colors against WCAG 2.2 text contrast requirements.</p>
+      </div>
+      <section class="help-section" aria-labelledby="help-section-1">
+        <h3 id="help-section-1"><svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20.7422 20.7129">
+                <g>
+                  <rect height="20.7129" opacity="0" width="20.7422" x="0" y="0"/>
+                  <path d="M12.9883 8.93555L4.13086 17.7832C3.78906 18.1348 3.33984 18.2422 3.00781 17.8809C2.64648 17.4902 2.72461 17.1191 3.10547 16.7285L11.9336 7.86133L11.0938 7.03125L3.20312 14.9219C0.185547 17.9395 1.64062 17.4707 0 19.7852L0.878906 20.7129C3.11523 19.082 2.8125 20.6836 5.87891 17.627L13.7988 9.75586ZM15.3125 10.7031L15.5859 10.4004C16.0645 9.90234 16.0938 9.31641 15.5762 8.80859L15.2832 8.52539C16.7773 7.1875 18.4375 7.00195 19.4629 5.95703C20.918 4.49219 20.4492 2.44141 19.4238 1.41602C18.4082 0.380859 16.377-0.0585938 14.8828 1.37695C13.8281 2.39258 13.6523 4.0625 12.3145 5.55664L12.0312 5.26367C11.5332 4.75586 10.9375 4.77539 10.4395 5.25391L10.1465 5.52734C9.54102 6.10352 9.6582 6.61133 10.166 7.12891L13.7109 10.6738C14.2285 11.1914 14.7461 11.2988 15.3125 10.7031Z" fill="currentColor" fill-opacity="0.85"/>
+                </g>
+              </svg><span>Pick and edit colors</span></h3>
+        <p>Click a color square to open the macOS color picker, or click an eyedropper to sample a color anywhere on your screen. Press Escape to cancel screen sampling.</p>
+        <p>You can also enter three or six hex codes in either text field, with or without a leading #. Press Return to finish editing. Click the arrows between the fields to swap foreground and background.</p>
+        <p>The ratio and preview update as you change a color. The weather card is sample content to help you preview and compare text against its background.</p>
+      </section>
+      <section class="help-section" aria-labelledby="help-section-2">
+        <h3 id="help-section-2"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="m4 8 8 2 8-2m-8 2v5m0 0-5 7m5-7 5 7"/></svg><span>Read the results</span></h3>
+        <p>A higher ratio means greater contrast. The badge summarizes the result; the AA and AAA columns show whether regular and large text pass each level.</p>
+          <table aria-label="WCAG text contrast requirements">
+            <thead><tr><th scope="col">WCAG level</th><th scope="col">Regular text</th><th scope="col">Large text</th></tr></thead>
+            <tbody><tr><th scope="row">AA</th><td>4.5:1</td><td>3:1</td></tr><tr><th scope="row">AAA</th><td>7:1</td><td>4.5:1</td></tr></tbody>
+          </table>
+        <p>Large text means at least 18 points, or 14 points when bold (24 or about 18.7 CSS pixels). Results use the full ratio, even when the displayed value is rounded. Color contrast is one part of accessibility; passing this check does not establish full WCAG compliance.</p>
+      </section>
+      <section class="help-section" aria-labelledby="help-section-3">
+        <h3 id="help-section-3"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><circle cx="7.5" cy="15" r="6"/><circle cx="16.5" cy="15" r="6"/></svg><span>Adjust a color</span></h3>
+        <p>Open the wand menu to adjust either color toward 3:1, 4.5:1, or 7:1 while keeping the other color fixed. Adjustments work even when the current ratio already exceeds the target.</p>
+        <p>Some targets cannot be reached by changing only one color. If a color stays unchanged, try adjusting the other one. Eight-bit color values can produce a ratio slightly above the target.</p>
+      </section>
+      <section class="help-section" aria-labelledby="help-section-4">
+        <h3 id="help-section-4"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="5" rx="2"/><path d="M7 4H4v18h16V4h-3"/></svg><span>Copy values and reuse colors</span></h3>
+        <p>Open the code-symbol menu to copy either color as a hex code or an rgb(…) value. In Settings, Copy contrast value copies both colors, the ratio, and the AA and AAA results.</p>
+        <p>The history menu keeps the last 10 distinct colors picked, newest first. Click a color to copy its hex code. When you drag in the macOS picker, the preview stays live and history saves the color when you release the pointer. Clear history removes the saved list.</p>
+      </section>
+      <section class="help-section" aria-labelledby="help-section-5">
+        <h3 id="help-section-5"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="3"/><path d="M12 1v4m-2-2 2 2 2-2m-2 20v-4m-2 2 2-2 2 2"/></svg><span>Use the mini window</span></h3>
+        <p>In Settings, turn on Use the mini window for a compact row of controls. The window uses your background color, and the ratio and result use your foreground color.</p>
+        <img class="help-mini-window" src="help/mini-window@2x.png" width="1168" height="300" alt="Chromatic’s mini window with the contrast ratio, result, two hex fields, eyedroppers, swap, settings, and close controls.">
+        <p>Click a hex field to edit it. Double-click to select text. Triple-click to open the macOS color picker. The eyedroppers still sample from the screen, and Settings includes commands to copy either hex code.</p>
+        <p>The compact result reads AAA, AA, AA Lg (AA for large text only), or Fail. The preview and results grid are hidden in this mode. Turn off Use the mini window to return to the full view.</p>
+      </section>
+      <section class="help-section" aria-labelledby="help-section-6">
+        <h3 id="help-section-6"><svg aria-hidden="true" viewBox="0 0 21.2598 20.8887" fill="currentColor" fill-opacity="0.9" aria-hidden="true">
+              <path d="M9.463 20.879L11.435 20.879C12.188 20.879 12.773 20.42 12.94 19.697L13.359 17.871L13.672 17.764L15.264 18.74C15.898 19.131 16.631 19.043 17.168 18.506L18.535 17.148C19.072 16.611 19.16 15.869 18.77 15.244L17.773 13.662L17.891 13.369L19.717 12.94C20.43 12.773 20.898 12.178 20.898 11.435L20.898 9.502C20.898 8.76 20.439 8.174 19.717 7.998L17.91 7.559L17.783 7.246L18.779 5.664C19.17 5.039 19.092 4.307 18.545 3.76L17.178 2.393C16.65 1.865 15.918 1.768 15.283 2.158L13.691 3.135L13.359 3.008L12.94 1.182C12.773 .459 12.188 0 11.435 0L9.463 0C8.711 0 8.125 .459 7.959 1.182L7.529 3.008L7.197 3.135L5.615 2.158C4.98 1.768 4.238 1.865 3.711 2.393L2.354 3.76C1.807 4.307 1.719 5.039 2.119 5.664L3.105 7.246L2.988 7.559L1.182 7.998C.459 8.174 0 8.76 0 9.502L0 11.435C0 12.178 .469 12.773 1.182 12.94L3.008 13.369L3.115 13.662L2.129 15.244C1.729 15.869 1.826 16.611 2.363 17.148L3.721 18.506C4.258 19.043 5 19.131 5.635 18.74L7.217 17.764L7.529 17.871L7.959 19.697C8.125 20.42 8.711 20.879 9.463 20.879ZM9.619 19.355C9.453 19.355 9.365 19.287 9.336 19.131L8.75 16.709C8.154 16.562 7.598 16.328 7.178 16.064L5.049 17.373C4.932 17.461 4.795 17.451 4.688 17.324L3.535 16.172C3.428 16.064 3.418 15.947 3.496 15.81L4.805 13.701C4.58 13.291 4.326 12.734 4.17 12.139L1.748 11.562C1.592 11.533 1.523 11.445 1.523 11.279L1.523 9.648C1.523 9.473 1.582 9.395 1.748 9.365L4.16 8.779C4.316 8.145 4.609 7.568 4.785 7.207L3.486 5.098C3.398 4.951 3.408 4.834 3.516 4.717L4.678 3.584C4.795 3.467 4.902 3.457 5.049 3.535L7.158 4.814C7.578 4.58 8.174 4.336 8.76 4.17L9.336 1.748C9.365 1.592 9.453 1.523 9.619 1.523L11.279 1.523C11.445 1.523 11.533 1.592 11.553 1.748L12.148 4.189C12.754 4.346 13.281 4.59 13.721 4.824L15.84 3.535C15.996 3.457 16.094 3.467 16.221 3.584L17.373 4.717C17.49 4.834 17.49 4.951 17.402 5.098L16.104 7.207C16.289 7.568 16.572 8.145 16.729 8.779L19.15 9.365C19.307 9.395 19.375 9.473 19.375 9.648L19.375 11.279C19.375 11.445 19.297 11.533 19.15 11.562L16.719 12.139C16.562 12.734 16.318 13.291 16.084 13.701L17.393 15.81C17.471 15.947 17.471 16.064 17.354 16.172L16.211 17.324C16.094 17.451 15.967 17.461 15.84 17.373L13.711 16.064C13.291 16.328 12.744 16.562 12.148 16.709L11.553 19.131C11.533 19.287 11.445 19.355 11.279 19.355ZM10.449 14.16C12.51 14.16 14.17 12.5 14.17 10.44C14.17 8.379 12.51 6.719 10.449 6.719C8.389 6.719 6.729 8.379 6.729 10.44C6.729 12.5 8.389 14.16 10.449 14.16ZM10.449 12.646C9.229 12.646 8.242 11.66 8.242 10.44C8.242 9.219 9.229 8.232 10.449 8.232C11.67 8.232 12.656 9.219 12.656 10.44C12.656 11.66 11.67 12.646 10.449 12.646Z"/>
+            </svg><span>Other settings and keyboard shortcut</span></h3>
+        <p>The &quot;Show preview&quot; and &quot;Show WCAG results&quot; control those two sections in the full view. Your choices are remembered, and these settings are unavailable in the mini window.</p>
+        <p>Enable &quot;Pick foreground with ⌘⇧O&quot; to immediately bring up the app window and start color picking. This shortcut works in both layouts. If macOS cannot register it, Chromatic shows an alert and leaves it disabled.</p>
+        <p>Close or Escape dismisses the Chromatic popover. Click its menu bar icon to open it again. To exit the app, choose &quot;Quit Chromatic completely&quot; in Settings.</p>
+      </section>
     </div>
   </dialog>
   <dialog id="copy-dialog" aria-labelledby="copy-title">

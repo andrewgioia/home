@@ -335,6 +335,15 @@ document.querySelector('#about').addEventListener('click', () => {
   document.querySelector('#about-dialog').showModal();
 });
 
+// Native dialog supplies focus containment, Escape, and close-button behavior.
+document.querySelector('#help').addEventListener('click', () => {
+  closeContextMenus();
+  settingsButton.focus({ preventScroll: true });
+  const dialog = document.querySelector('#help-dialog');
+  dialog.showModal();
+  dialog.querySelector('.help-content').scrollTop = 0;
+});
+
 function contrastReport() {
   const ratio = contrastRatio(colors.foreground, colors.background);
   const result = minimum => ratio >= minimum ? 'Pass' : 'Fail';
